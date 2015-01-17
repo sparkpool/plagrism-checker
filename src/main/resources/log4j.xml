@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+	
+	<appender name="PAYTMPG" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="/tmp/logs/track.log" />
+		<param name="Append" value="true" />
+		<param name="DatePattern" value="'.'MM-dd-yyyy-HH" />
+		<layout class="org.apache.log4j.PatternLayout">
+		<param name="ConversionPattern" value="%d{DATE} - [%t] - %C{1}.%M(%L) - %p: %m%n" />
+		</layout>
+	</appender>
+   <appender name="STDOUT" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{DATE} - [%t] - %C{1}.%M(%L) - %p: %m%n" />
+		</layout>
+	</appender>
+
+	 <appender name="ASYNC" class="org.apache.log4j.AsyncAppender">
+       <param name="BufferSize" value="500"/>
+        <param name="LocationInfo" value="true"/>
+       <appender-ref ref="PAYTMPG"/>
+   </appender>
+
+   <logger name="org.springframework" additivity="false" >   
+     <level value="off"/>  
+   </logger>
+       
+   <logger name="org.apache.http" additivity="false" >   
+     <level value="off"/>  
+   </logger>
+   
+    <logger name="com.paytm" additivity="true" >   
+
+     	<level value="ALL" />
+
+		<appender-ref ref="ASYNC" />
+    </logger>
+ </log4j:configuration>
+
+    
+
