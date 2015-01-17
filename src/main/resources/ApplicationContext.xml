@@ -8,7 +8,7 @@
 
 
     <context:annotation-config />
-	<context:component-scan base-package="com.paytm.pg.rest.*" />
+	<context:component-scan base-package="com.pc.rest.*" />
 	
 	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 	  <property name="locations">
@@ -17,7 +17,5 @@
 	       </list>
 	  </property>
     </bean>
-
- <!-- Enable autowiring -->
 
 </beans>

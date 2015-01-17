@@ -6,7 +6,7 @@
   </welcome-file-list>
 
 	<listener>
-	    <listener-class>com.paytm.pg.analytics.listener.InitiateSpringContextListener</listener-class>
+	    <listener-class>com.pc.listener.InitiateSpringContextListener</listener-class>
 	</listener>
 
   <servlet>
@@ -16,7 +16,7 @@
                 </servlet-class>
 		<init-param>
 		     <param-name>com.sun.jersey.config.property.packages</param-name>
-		     <param-value>com.paytm.pg.rest</param-value>
+		     <param-value>com.pc.rest</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
@@ -25,15 +25,6 @@
 		<servlet-name>jersey-servlet</servlet-name>
 		<url-pattern>/rest/*</url-pattern>
 	</servlet-mapping>
-
-  <filter>
-   <filter-name>SecurityFilter</filter-name>
-   <filter-class>com.paytm.pg.analytics.filter.SecurityFilter</filter-class>
-</filter>
-<filter-mapping>
-   <filter-name>SecurityFilter</filter-name>
-   <url-pattern>/*</url-pattern>
-</filter-mapping>
 
   <session-config>
 	<session-timeout>10</session-timeout> 

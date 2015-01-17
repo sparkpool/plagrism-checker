@@ -6,7 +6,7 @@
 
 	
 	<appender name="PAYTMPG" class="org.apache.log4j.DailyRollingFileAppender">
-		<param name="File" value="/tmp/logs/track.log" />
+		<param name="File" value="/logs/pc.log" />
 		<param name="Append" value="true" />
 		<param name="DatePattern" value="'.'MM-dd-yyyy-HH" />
 		<layout class="org.apache.log4j.PatternLayout">
