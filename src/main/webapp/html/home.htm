@@ -1,0 +1,52 @@
+<html>
+<head>
+  <script type="text/javascript" src="js/jquery-2.1.3.js" ></script>
+</head>
+<body>
+
+<h1>Welome to Plagrism Checker, it's free and no limit of characters also </h1>
+<br /><br />
+  <textarea rows="10" cols="40" id="plagDt"></textarea>
+  <br /><br />
+  <input type="button" value="SEARCH" id="srch" />
+  <br /><br />
+  <ul id="result">  
+  
+  </ul>
+  <script type="text/javascript">
+    $(document).ready(function(){
+    	$('#srch').click(function(){
+    		var elm = $(this);
+    		elm.hide();
+    		var data = $('#plagDt').val();
+        	var url="/pc/rest/search/content?q=" + encodeURI(data);
+        	$.ajax({
+        		    'url' : url,
+        		    'type' : 'GET',
+        		    success : function(data) {
+        		     if(data!=null && data.items.length > 0){
+        		     var result = "";
+        		     for(var i=0;i<data.items.length;i++){
+        		    	var item = data.items[i]; 
+        		    	result +="<li>" + item.link + "</li>"; 
+        		     }
+        		     $('#result').empty();
+        		     $('#result').append(result);
+        		     elm.show();
+        		     }else{
+        		    	 $('#result').empty();
+            		     $('#result').append("<li>No Result Found</li>");
+            		     elm.show();
+        		     }
+        		    },
+        		    error : function(data){
+        		    	alert("There came an Error, please try again !!!");
+        		    	elm.show();
+        		    }
+        		  });
+    	});
+    	
+    });
+  </script>
+</body>
+</html>

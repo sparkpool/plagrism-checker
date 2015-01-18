@@ -9,20 +9,16 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class InitiateSpringContextListener implements ServletContextListener{
 
-	private Logger logger = Logger.getLogger(InitiateSpringContextListener.class);
-	
 	private static ClassPathXmlApplicationContext context;
 	
 	public void contextDestroyed(ServletContextEvent arg0) {
 		// TODO Auto-generated method stub
-		logger.info("Spring Context initialization starts");
-        context = new ClassPathXmlApplicationContext("ApplicationContext.xml");
-        logger.info("Spring Context initialization ends");
 	}
 
 	public void contextInitialized(ServletContextEvent arg0) {
-		// TODO Auto-generated method stub
-		
+		System.out.println("Spring Context initialization starts");
+        context = new ClassPathXmlApplicationContext("ApplicationContext.xml");
+        System.out.println("Spring Context initialization ends");		
 	}
 	
 	public static ApplicationContext getContext(){
