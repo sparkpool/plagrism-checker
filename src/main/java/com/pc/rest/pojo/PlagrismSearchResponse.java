@@ -10,6 +10,9 @@ public class PlagrismSearchResponse extends GenericResponse{
 	@JsonProperty("items")
 	private List<Item> items = new ArrayList<Item>();
 
+	@JsonProperty("error")
+	private ErrorResponse error;
+	
 	public List<Item> getItems() {
 		return items;
 	}

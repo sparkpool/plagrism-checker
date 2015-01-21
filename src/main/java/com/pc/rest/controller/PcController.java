@@ -32,7 +32,7 @@ public class PcController {
 		if(plagrismResponse!=null){
 			return plagrismResponse.toJSON();
 		}
-		return null;
+		return "{}";
 	}
 	
 	public ISearchContentService getSearchService(){
