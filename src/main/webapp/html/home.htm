@@ -19,6 +19,10 @@
     		var elm = $(this);
     		elm.hide();
     		var data = $('#plagDt').val();
+    		if(data == null || data == '' || data.length > 1500){
+    			alert("Entered data must be non Empty and less than 1500 characters long");
+    			return false;
+    		}
         	var url="/pc/rest/search/content?q=" + encodeURI(data);
         	$.ajax({
         		    'url' : url,

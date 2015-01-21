@@ -11,7 +11,7 @@ public class PlagrismSearchResponse extends GenericResponse{
 	private List<Item> items = new ArrayList<Item>();
 
 	@JsonProperty("error")
-	private ErrorResponse error;
+	private ErrorResponse errorResponse;
 	
 	public List<Item> getItems() {
 		return items;
@@ -21,6 +21,14 @@ public class PlagrismSearchResponse extends GenericResponse{
 		this.items = items;
 	}
 	
+	public ErrorResponse getErrorResponse() {
+		return errorResponse;
+	}
+
+	public void setErrorResponse(ErrorResponse errorResponse) {
+		this.errorResponse = errorResponse;
+	}
+
 	@Override
 	protected List<String> getKeys() {
 		List<String> keys = super.getKeys();

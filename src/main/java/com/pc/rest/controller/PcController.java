@@ -1,7 +1,5 @@
 package com.pc.rest.controller;
 
-import java.util.List;
-
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -25,14 +23,23 @@ public class PcController {
 	@Produces("application/json")
 	public String searchContent(@QueryParam("q") String query){
 		logger.info("Query received in request is " + query);
-		if(query == null || query.trim().length() == 0){
-			return null;
-		}
-		PlagrismSearchResponse plagrismResponse = getSearchService().getSearchResult(query);
-		if(plagrismResponse!=null){
+		PlagrismSearchResponse plagrismResponse = null;
+		if(query == null || query.trim().length() == 0 || query.length()>1500){
+			plagrismResponse = new PlagrismSearchResponse();
+			plagrismResponse.addMessage("Entered Message Must be Non Empty and Length Must be Less than 1500");
+			plagrismResponse.setError("403");
 			return plagrismResponse.toJSON();
 		}
-		return "{}";
+		plagrismResponse = getSearchService().getSearchResult(query);
+		if(plagrismResponse == null){
+			plagrismResponse = new PlagrismSearchResponse();
+			plagrismResponse.setError("500");
+			plagrismResponse.addMessage("There came an Exception, please try again!!");
+		}else if(plagrismResponse!=null && plagrismResponse.getErrorResponse()!=null){
+			plagrismResponse.addMessage(plagrismResponse.getErrorResponse().getMessage());
+			plagrismResponse.setError(plagrismResponse.getErrorResponse().getCode());
+		}
+		return plagrismResponse.toJSON();
 	}
 	
 	public ISearchContentService getSearchService(){
