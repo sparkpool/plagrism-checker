@@ -1,4 +1,4 @@
-package com.pc.rest.core.builder.file.pdf;
+package com.pc.rest.core.file.pdf;
 
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Font;

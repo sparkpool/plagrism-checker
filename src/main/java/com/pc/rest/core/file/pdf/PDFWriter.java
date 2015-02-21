@@ -1,10 +1,14 @@
-package com.pc.rest.core.builder.file.pdf;
+package com.pc.rest.core.file.pdf;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.security.InvalidParameterException;
+
+import org.springframework.util.StringUtils;
 
 import com.itextpdf.text.Anchor;
+import com.itextpdf.text.Chapter;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Font;
@@ -124,24 +128,52 @@ public class PDFWriter {
 	 * ByDefault this will add catFont by default
 	 * @param anchorName
 	 */
-	public void setAnchor(String anchorName){
-		setAnchor(anchorName, PDFStyles.catFont);
+	public Anchor setAnchor(String anchorName){
+		return getAnchor(anchorName, PDFStyles.catFont);
 	}
 	
-	public void setAnchor(String anchorName, Font font){
+	public Anchor getAnchor(String anchorName, Font font){
 		Anchor anchor = new Anchor(anchorName, font);
 	    anchor.setName(anchorName);
-	    
-	    
+	    return anchor;
 	}
 	
 	/**
 	 * This will add data in a paragraph and it will add empty line
 	 * before writing to a paragraph
 	 * @param data
+	 * @throws DocumentException 
 	 */
-	public void addDataInParagraph(String data){
-		
+	public void addDataInParagraph(String data) throws DocumentException{
+	  document.add(new Paragraph(data));	
+	}
+	
+	public void addDataInParagraphInsideChapter(String data, Chapter chapter) throws DocumentException{
+		if(chapter == null){
+			throw new InvalidParameterException("CHAPTER CAN NOT BE NULL");
+		}
+		chapter.add(new Paragraph(data));
+		document.add(chapter);
+	}
+	
+	public Chapter createChapter(String chapterTitle, Integer noOfChapter){
+		if(chapterTitle == null && noOfChapter == null){
+			throw new InvalidParameterException("CHAPTER TITLE AND NO OF CHAPTER CAN NOT BE NULL");
+		}
+		if(chapterTitle == null){
+			return new Chapter(noOfChapter);
+		}
+		return new Chapter(new Paragraph(chapterTitle), noOfChapter);
+	}
+	
+	public Chapter createChapterwithAnchor(Integer noOfChapter, Anchor anchor){
+		if(noOfChapter == null && anchor == null){
+			throw new InvalidParameterException("NO OF CHAPTER AND ANCHOR CAN NOT BE NULL");
+		}
+		if(anchor == null){
+			return new Chapter(noOfChapter);
+		}
+		return new Chapter(new Paragraph(anchor), noOfChapter);
 	}
 	
 	private static void addEmptyLine(Paragraph paragraph, int number) {
