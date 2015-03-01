@@ -6,7 +6,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.pc.rest.common.http.HkHttpClient;
+import com.pc.rest.common.http.PCHttpClient;
 import com.pc.rest.core.builder.UrlBuilder;
 import com.pc.rest.pojo.PlagrismSearchResponse;
 import com.pc.rest.service.intrface.ISearchContentService;
@@ -24,7 +24,7 @@ public class SearchContentServiceImpl implements ISearchContentService{
     public PlagrismSearchResponse getSearchResult(String query){
     	String url = getUrlBuilder().getPlagrismSearchUrl(query);
     	if(url!=null){
-    		return (PlagrismSearchResponse)HkHttpClient.executeGet(url, PlagrismSearchResponse.class);
+    		return (PlagrismSearchResponse)PCHttpClient.executeGet(url, PlagrismSearchResponse.class);
     	}
     	return null;
     }

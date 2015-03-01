@@ -34,7 +34,7 @@ import java.util.*;
 import java.util.zip.GZIPInputStream;
 
 
-public class HkHttpClient {
+public class PCHttpClient {
 
   private static final ObjectMapper mapper;
   private static final JsonFactory jsonFactory;

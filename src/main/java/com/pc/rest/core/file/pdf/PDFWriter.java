@@ -4,15 +4,20 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.InvalidParameterException;
-
-import org.springframework.util.StringUtils;
+import java.util.List;
 
 import com.itextpdf.text.Anchor;
+import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chapter;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
+import com.itextpdf.text.Font.FontFamily;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
 
@@ -27,6 +32,9 @@ public class PDFWriter {
 	
 	private Document document;
 	
+	private PdfPTable pdfTable;
+	
+	private File file;
 	/**
 	 * Constructor takes filename with full path
 	 * This will create new file if file doesn't exist in particular location
@@ -37,7 +45,7 @@ public class PDFWriter {
 	 */
 	public PDFWriter(String filePath) throws DocumentException, IOException{
 	     	document = new Document();
-	     	File file= new File(filePath);
+	     	file = new File(filePath);
 	     	if(!file.exists()){
 	     		file.createNewFile();
 	     	}
@@ -45,6 +53,9 @@ public class PDFWriter {
 			document.open();
 	}
 	
+	public File getFile(){
+		return this.file;
+	}
 	/**
 	 * This will add Title as meta data in PDF document 
 	 * which you can see in properties
@@ -183,6 +194,55 @@ public class PDFWriter {
 	  }
 	
 	/**
+	 * This will create Table Structure in PDF File 
+	 * List will contain header names size of list will be equal to 
+	 * no of headers
+	 * 
+	 * This table will be added to document after creating header cells
+	 * @param tableHeaders
+	 * @throws DocumentException 
+	 */
+	public void createTable(List<String> tableHeaders) throws DocumentException{
+		if(tableHeaders == null || tableHeaders.size() == 0){
+			throw new InvalidParameterException("TABLE HEADERS MUST BE GREATER THAN ZERO");
+		}
+		pdfTable = new PdfPTable(tableHeaders.size());
+		for(String header : tableHeaders){
+			if(header!=null && header.trim().length()>0){
+				pdfTable.addCell(getTableCell(header));	
+			}
+		}
+	}
+	
+	/**
+	 * This will add data in next cell
+	 * @param table
+	 * @param data
+	 */
+	public void addDataInPDFTable(String data, BaseColor baseColor){
+		if(pdfTable == null){
+			throw new InvalidParameterException("PDF Table CAN NOT BE NULL");
+		}
+		Font font = new Font(FontFamily.HELVETICA, 8, Font.NORMAL, baseColor);
+		pdfTable.addCell(new Paragraph(data, font));
+	}
+	
+	public void addTableToDocument() throws DocumentException{
+	  if(pdfTable == null){
+		  throw new InvalidParameterException("YOU CAN NOT ADD EMPTY PDF TABLE TO DOCUMENT");
+	  }
+	  document.add(pdfTable);
+	}
+	
+	private PdfPCell getTableCell(String headerName){
+		Font font = new Font(FontFamily.HELVETICA, 8, Font.BOLD, BaseColor.BLACK);
+		PdfPCell pdfCell = new PdfPCell(new Paragraph(headerName, font));
+		pdfCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+	    return pdfCell;
+	}
+	
+	
+	/**
 	 * This will return document and this will close the document
 	 * as well.
 	 * If you do any operation after calling this method an Exception will 
@@ -190,8 +250,14 @@ public class PDFWriter {
 	 * @return
 	 */
 	public Document getDocument(){
-		document.close();
+		close();
 		return document;
 	}
 
+	private void close(){
+		if(document == null){
+			throw new InvalidParameterException("DOCUMENT CAN NOT BE NULL");
+		}
+		document.close();
+	}
 }

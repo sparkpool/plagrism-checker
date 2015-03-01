@@ -4,17 +4,32 @@
 </head>
 <body>
 
-<h1>Welome to Plagrism Checker, it's free and no limit of characters also </h1>
+<h1> Welome to Plagrism Checker </h1>
 <br /><br />
-  <textarea rows="10" cols="40" id="plagDt"></textarea>
+ <form action="/pc/rest/search/content/pdf" method="GET">
+  <textarea name="q" rows="10" cols="40" id="plagDt"></textarea>
   <br /><br />
   <input type="button" value="SEARCH" id="srch" />
+  <input type="submit" VALUE="GET PDF RESULT" id="pdfSrch" />
+  </form>
   <br /><br />
   <ul id="result">  
   
   </ul>
   <script type="text/javascript">
     $(document).ready(function(){
+    	
+    	$('#pdfSrch').click(function(){
+    		var elm = $(this);
+    		elm.hide();
+    		var data = $('#plagDt').val();
+    		if(data == null || data == '' || data.length > 1500){
+    			alert("Entered data must be non Empty and less than 1500 characters long");
+    			elm.show();
+    			return false;
+    		}
+    	});
+    	
     	$('#srch').click(function(){
     		var elm = $(this);
     		elm.hide();
@@ -32,7 +47,8 @@
         		     var result = "";
         		     for(var i=0;i<data.items.length;i++){
         		    	var item = data.items[i]; 
-        		    	result +="<li>" + item.link + "</li>"; 
+        		    	result +="<li><a href='" + item.link + "' > " +
+        		    	item.snippet + "</a></li>"; 
         		     }
         		     $('#result').empty();
         		     $('#result').append(result);
