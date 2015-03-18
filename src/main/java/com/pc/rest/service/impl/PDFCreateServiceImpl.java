@@ -35,14 +35,15 @@ public class PDFCreateServiceImpl implements IPDFCreateService{
 	@Override
 	public File createPDF(String query) {
 		PlagrismSearchResponse plagrismResponse = getSearchContentService().getSearchResult(query);
-		return populateFileFromPCResponse(plagrismResponse);
+		return populateFileFromPCResponse(plagrismResponse, query);
 	}
 	
-	private File populateFileFromPCResponse(PlagrismSearchResponse plagrismResponse){
+	private File populateFileFromPCResponse(PlagrismSearchResponse plagrismResponse, String query){
 		if(plagrismResponse!=null){
 			String fileName = getFileName();
 			try {
 				PDFWriter pdfWriter = new PDFWriter(fileName);
+				pdfWriter.addTitle(title);(query);
 				List<Item> items = plagrismResponse.getItems();
 				pdfWriter.createTable(getTableHeaders());
 				for(int i = 0 ; i<items.size(); i++){

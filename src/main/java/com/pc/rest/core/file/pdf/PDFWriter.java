@@ -123,6 +123,7 @@ public class PDFWriter {
 		Paragraph paragraph = new Paragraph();
 	    addEmptyLine(paragraph, 1);
 	    paragraph.add(new Paragraph(title, font));
+	    addEmptyLine(paragraph, 1);
 	    document.add(paragraph);
 	}
 	
@@ -206,12 +207,27 @@ public class PDFWriter {
 		if(tableHeaders == null || tableHeaders.size() == 0){
 			throw new InvalidParameterException("TABLE HEADERS MUST BE GREATER THAN ZERO");
 		}
-		pdfTable = new PdfPTable(tableHeaders.size());
+		float[] widths = getWidths(tableHeaders.size());
+		pdfTable = new PdfPTable(widths);
+		int i=0;
 		for(String header : tableHeaders){
 			if(header!=null && header.trim().length()>0){
 				pdfTable.addCell(getTableCell(header));	
 			}
 		}
+	}
+	
+	/**
+	 * 
+	 * @param noOfColumn
+	 * @return
+	 */
+	public float[] getWidths(int noOfColumn){
+		float[] widths = new float[noOfColumn];
+		for(int i=0;i<noOfColumn;i++){
+			widths[i] = (i == 0 ? 1f : 8f);
+		}
+		return widths;
 	}
 	
 	/**
@@ -236,7 +252,7 @@ public class PDFWriter {
 	
 	private PdfPCell getTableCell(String headerName){
 		Font font = new Font(FontFamily.HELVETICA, 8, Font.BOLD, BaseColor.BLACK);
-		PdfPCell pdfCell = new PdfPCell(new Paragraph(headerName, font));
+		PdfPCell pdfCell = new PdfPCell(new PdfPCell(new Phrase(headerName, font)));
 		pdfCell.setHorizontalAlignment(Element.ALIGN_CENTER);
 	    return pdfCell;
 	}
