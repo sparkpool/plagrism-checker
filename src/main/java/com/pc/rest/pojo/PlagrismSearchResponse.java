@@ -7,6 +7,8 @@ import org.codehaus.jackson.annotate.JsonProperty;
 
 public class PlagrismSearchResponse extends GenericResponse{
 
+	private static final long serialVersionUID = 5354789369770652838L;
+
 	@JsonProperty("items")
 	private List<Item> items = new ArrayList<Item>();
 

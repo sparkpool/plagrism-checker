@@ -209,7 +209,6 @@ public class PDFWriter {
 		}
 		float[] widths = getWidths(tableHeaders.size());
 		pdfTable = new PdfPTable(widths);
-		int i=0;
 		for(String header : tableHeaders){
 			if(header!=null && header.trim().length()>0){
 				pdfTable.addCell(getTableCell(header));	

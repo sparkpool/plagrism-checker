@@ -1,7 +1,5 @@
 package com.pc.rest.service.impl;
 
-import java.util.List;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +18,6 @@ public class SearchContentServiceImpl implements ISearchContentService{
 	private UrlBuilder urlBuilder;
 
 	@Override
-	@SuppressWarnings("unchecked")
     public PlagrismSearchResponse getSearchResult(String query){
     	String url = getUrlBuilder().getPlagrismSearchUrl(query);
     	if(url!=null){

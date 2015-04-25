@@ -5,3 +5,5 @@
 .classpath
 .travis*
 .project*
+bin
+bin/**

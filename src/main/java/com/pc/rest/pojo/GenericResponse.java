@@ -7,6 +7,8 @@ import com.pc.rest.core.JSONObject;
 
 public class GenericResponse extends JSONObject{
 
+	private static final long serialVersionUID = 2561605336985002359L;
+
 	private List<String> messages = new ArrayList<String>();
 	
 	private String error;

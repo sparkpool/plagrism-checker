@@ -12,8 +12,6 @@ import org.springframework.stereotype.Service;
 
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.pc.rest.controller.PcController;
 import com.pc.rest.core.file.pdf.PDFWriter;
 import com.pc.rest.pojo.Item;
 import com.pc.rest.pojo.PlagrismSearchResponse;
@@ -43,7 +41,7 @@ public class PDFCreateServiceImpl implements IPDFCreateService{
 			String fileName = getFileName();
 			try {
 				PDFWriter pdfWriter = new PDFWriter(fileName);
-				pdfWriter.addTitle(title);(query);
+				pdfWriter.addTitle(query);
 				List<Item> items = plagrismResponse.getItems();
 				pdfWriter.createTable(getTableHeaders());
 				for(int i = 0 ; i<items.size(); i++){

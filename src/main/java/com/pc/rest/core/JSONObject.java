@@ -14,7 +14,6 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.pc.rest.constants.DateConstants;
 
 
-@SuppressWarnings("unchecked")
 public abstract class JSONObject implements Serializable, Cloneable {
 
   private static final long serialVersionUID = 1036213105972756617L;
