@@ -5,7 +5,7 @@
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
 
 	
-	<appender name="PAYTMPG" class="org.apache.log4j.DailyRollingFileAppender">
+	<appender name="file" class="org.apache.log4j.DailyRollingFileAppender">
 		<param name="File" value="/logs/pc.log" />
 		<param name="Append" value="true" />
 		<param name="DatePattern" value="'.'MM-dd-yyyy-HH" />
@@ -22,7 +22,7 @@
 	 <appender name="ASYNC" class="org.apache.log4j.AsyncAppender">
        <param name="BufferSize" value="500"/>
         <param name="LocationInfo" value="true"/>
-       <appender-ref ref="PAYTMPG"/>
+       <appender-ref ref="file"/>
    </appender>
 
    <logger name="org.springframework" additivity="false" >   
@@ -33,7 +33,7 @@
      <level value="off"/>  
    </logger>
    
-    <logger name="com.paytm" additivity="true" >   
+    <logger name="com.pc" additivity="true" >   
 
      	<level value="ALL" />
 

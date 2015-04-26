@@ -19,6 +19,7 @@ public class SearchContentServiceImpl implements ISearchContentService{
 
 	@Override
     public PlagrismSearchResponse getSearchResult(String query){
+		logger.info("Query received is " + query);
     	String url = getUrlBuilder().getPlagrismSearchUrl(query);
     	if(url!=null){
     		return (PlagrismSearchResponse)PCHttpClient.executeGet(url, PlagrismSearchResponse.class);
